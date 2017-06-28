@@ -1,0 +1,22 @@
+{
+  "banks": [
+    {
+      "index": 0,
+      "bankname": "1st Source Bank",
+      "location": "USA",
+      "website": "www.1stsource.com"
+    },
+    {
+      "index": 1,
+      "bankname": "1st Summit Bank",
+      "location": "North America",
+      "website": "www.1stsummit.com"
+    },
+    {
+      "index": 2,
+      "bankname": "A.J. Smith Federal Savings Bank",
+      "location": "USA",
+      "website": "www.ajsmithbank.com"
+    }
+  ]
+}
