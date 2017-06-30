@@ -2,21 +2,96 @@
   "banks": [
     {
       "index": 0,
-      "bankname": "1st Source Bank",
-      "location": "USA",
-      "website": "www.1stsource.com"
+      "bankname": "Land Bank of the Philippines", 
+      "type": "Universal Banks", //Type Of Financial Institustion
+      "contact": "Mr. Alex V. Buenaventura" , //Name of Contact
+      "position": "President and CEO" , //Position
+      "contactemail": "abuenaventura@mail.landbank.com", //Contact Email  
+      "headquarters": "LandBank Plaza Bldg., 1598 M. H. Del Pilar cor. Dr. J. Quintos Sts., Malate, Manila 1004", //Head Ofiices Address
+      "country": "Philippines",
+      "offices": "429", //Number of Offices
+      "trunkline": "522-0000 loc. 7143, 7484, 7318", //Telephone Number
+      "fax": "528-8568, 528-8549, 528-8580", //Fax Number
+      "companyemail": "", //Company Email      
+      "website": "http://www.landbank.com" 
     },
     {
       "index": 1,
-      "bankname": "1st Summit Bank",
-      "location": "North America",
-      "website": "www.1stsummit.com"
+      "bankname": "ANZ Banking Group Ltd.", 
+      "type": "Universal Banks",
+      "contact": "Mr. Charles M. Rodriguez" , 
+      "position": "Acting Chief Executive Officer" , 
+      "contactemail": "Charles.Rodriguez@anz.com",
+      "headquarters": "9/F Metrobank Card Corp. Center, 6778 Ayala Avenue, Makati City",
+      "country": "Philippines",
+      "offices": "1",
+      "trunkline": "841-7777",
+      "fax": "818-8112",
+      "companyemail": "",   
+      "website": "http://www.anz.com"
+    },{
+      "index": 2,
+      "bankname": "Deutsche Bank AG", 
+      "type": "Universal Banks",
+      "contact": "Mr. Enrico S. Cruz" ,
+      "position": "Chief Country Officer and Managing Director, Global Markets" , 
+      "contactemail": "enrico.cruz@db.com",
+      "headquarters": "26 / F Ayala Tower One, Ayala Triangle, Makati City 1226",
+      "country": "Philippines",
+      "offices": "1",
+      "trunkline": "894-6900, 894-6888",
+      "fax": "894-6901, 894-6890",
+      "companyemail": "",     
+      "website": "http://www.deuba.com"
+    },{
+      "index": 3,
+      "bankname": "ING Bank N.V", 
+      "type": "Universal Banks",
+      "contact": "Ms. Consuelo D. Garcia" , 
+      "position": "Country Manager" , 
+      "contactemail": "zondy.garcia@asia.ing.com",
+      "headquarters": "20th Floor Tower One, Ayala Triangle, Ayala Avenue, Makati City 1226",
+      "country": "Philippines",
+      "offices": "1",
+      "trunkline": "479-8888, 479-8881, 840-8888, 840-8881",
+      "fax": "815-1116, 891-9767, 891-9835",
+      "companyemail": "",   
+      "website": "http://www.ing.com"
     },
     {
-      "index": 2,
-      "bankname": "A.J. Smith Federal Savings Bank",
-      "location": "USA",
-      "website": "www.ajsmithbank.com"
+      "index": 4,
+      "bankname": "Mizuho Bank, Ltd. - Manila Branch", 
+      "type": "Universal Banks",
+      "contact": "Mr. Tsutomu Yamamoto",
+      "position": "General Manager and Country Head", 
+      "contactemail": "tsutomu.yamamoto@mizuho-cb.com",
+      "headquarters": "25th Floor, The Zuellig Building, Makati Avenue corner Paseo de Roxas, 1225 Makati City",
+      "country": "Philippines",
+      "offices": "1",
+      "trunkline": "860-3500, 860-3558,860-3556, 848-0001 to 10",
+      "fax": "815-3770, 817-8455",
+      "companyemail": "",   
+      "website": "http://www.mizuho-fg.co.jp"
+    },
+    {
+      "index": 5,
+      "bankname": "Standard Chartered Bank", 
+      "type": "Universal Banks",
+      "contact": "Ms. Lynette V. Ortiz", 
+      "position": "Chief Excecutive Officer", 
+      "contactemail": "Lynette.Ortiz@sc.com",
+      "headquarters": "The Sky Plaza Bldg., 6788 Ayala Ave., Makati City 1226",
+      "country": "Philippines",
+      "offices": "1",
+      "trunkline": "886-7888",
+      "fax": "886-7146, 752-4554",
+      "companyemail": "",   
+      "website": "http://www.standardchartered.com.ph"
     }
   ]
 }
+
+/*
+Sources: http://www.bsp.gov.ph/banking/directory.asp?paging=next&Start=20&Offset=20&BankName=&Address=&InstitutionTypeID=1&submit=Find&ctr=21&i=20
+Updated: June 27, 2017
+*/
