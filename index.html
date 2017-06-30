@@ -29,7 +29,6 @@
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <!--Custom-->
     <link rel="stylesheet" type="text/css" href="custom.css">
-    <script src="js/allbank_connect.js"></script>
 </head>
 
 <body>
@@ -84,7 +83,7 @@
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         <label for="supplier_website">Website</label>
-                                        <input type="email" class="form-control" id="supplier_website" name="supplier_website" placeholder="Website">
+                                        <input type="text" class="form-control" id="supplier_website" name="supplier_website" placeholder="Website">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -103,7 +102,7 @@
                                     <h4>Contact Information <span class="fa fa-plus plus_add_contact pull-right" id="plus_add_contact"
                                             onclick="show_view_contact();"></span></h4>
                                     <div class="list-group">
-                                        <a href="javascript:void(0);" onclick="window.location='#'" class="list-group-item supplier_contact_list" >Agnes Sy</a>
+                                        <a href="javascript:void(0);" onclick="window.location='#'" class="list-group-item supplier_contact_list">Agnes Sy</a>
                                         <a href="javascript:void(0);" onclick="window.location='#'" class="list-group-item supplier_contact_list">Eduardo Lee tan</a>
                                     </div>
                                 </div>
@@ -176,8 +175,9 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
-                                <label for="supplier_bank_name">Bank Name</label>
-                                <select class="form-control selectpicker" data-live-search="true" id="supplier_bank_name" name="supplier_bank_name"></select>
+                                <label for="">Bank Name</label>
+                                <select class="form-control selectpicker" data-live-search="true" id="supplier_bank_name" name="supplier_bank_name" style="display:none;"></select>
+                                <input type="text" class="form-control" id="supplier_bank_name_input" name="supplier_bank_name_input" placeholder="Bank Name" style="display:none;"> 
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -205,6 +205,12 @@
                 <p id="btn_add_suppliers">
                     <button type="submit" class="btn btn-success">SUBMIT</button>
                     <button type="reset" class="btn btn-primary reset">CANCEL</button>
+                    <button class="btn btn-primary btnback" id="btnback" onclick="backtomain()" style="display:none;">BACK</button>
+                </p>
+                <p id="btn_edit_suppliers" style="display:none;">
+                    <button type="submit" class="btn btn-success" id="btnsavechanges">SAVE CHANGES</button>
+                    <button type="reset" class="btn btn-primary" id="btncanceledit" onclick="closeNav()">CANCEL</button>
+                    <button class="btn btn-primary btnback1" id="btnback1" onclick="backtomain1()" style="display:none;">BACK</button>
                 </p>
                 </form>
             </div>
@@ -266,6 +272,7 @@
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <button type="button" class="btn btn-primary"><span class="fa fa-file-pdf-o" ></span></button>
+                                            <button type="button" class="btn btn-primary" onclick="editinfo()"><span class="fa fa-gear"></span></button>
                                             <button type="button" class="btn btn-primary" onclick="readinfo()"><span class="fa fa-info-circle" ></span></button>
                                         </div>
                                     </td>
@@ -284,32 +291,154 @@
 </html>
 
 <script type="text/javascript">
+    //Load navigation
     $("#navigation").load("navigation.html");
+
+    //Put JSON into Select
+    var allbanks = {
+        banks: [
+            {
+            "index": 0,
+            "bankname": "Land Bank of the Philippines", 
+            "type": "Universal Banks", //Type Of Financial Institustion
+            "contact": "Mr. Alex V. Buenaventura" , //Name of Contact
+            "position": "President and CEO" , //Position
+            "contactemail": "abuenaventura@mail.landbank.com", //Contact Email  
+            "headquarters": "LandBank Plaza Bldg., 1598 M. H. Del Pilar cor. Dr. J. Quintos Sts., Malate, Manila 1004", //Head Ofiices Address
+            "country": "Philippines",
+            "offices": "429", //Number of Offices
+            "trunkline": "522-0000 loc. 7143, 7484, 7318", //Telephone Number
+            "fax": "528-8568, 528-8549, 528-8580", //Fax Number
+            "companyemail": "", //Company Email      
+            "website": "http://www.landbank.com" 
+            },
+            {
+            "index": 1,
+            "bankname": "ANZ Banking Group Ltd.", 
+            "type": "Universal Banks",
+            "contact": "Mr. Charles M. Rodriguez" , 
+            "position": "Acting Chief Executive Officer" , 
+            "contactemail": "Charles.Rodriguez@anz.com",
+            "headquarters": "9/F Metrobank Card Corp. Center, 6778 Ayala Avenue, Makati City",
+            "country": "Philippines",
+            "offices": "1",
+            "trunkline": "841-7777",
+            "fax": "818-8112",
+            "companyemail": "",   
+            "website": "http://www.anz.com"
+            },{
+            "index": 2,
+            "bankname": "Deutsche Bank AG", 
+            "type": "Universal Banks",
+            "contact": "Mr. Enrico S. Cruz" ,
+            "position": "Chief Country Officer and Managing Director, Global Markets" , 
+            "contactemail": "enrico.cruz@db.com",
+            "headquarters": "26 / F Ayala Tower One, Ayala Triangle, Makati City 1226",
+            "country": "Philippines",
+            "offices": "1",
+            "trunkline": "894-6900, 894-6888",
+            "fax": "894-6901, 894-6890",
+            "companyemail": "",     
+            "website": "http://www.deuba.com"
+            },{
+            "index": 3,
+            "bankname": "ING Bank N.V", 
+            "type": "Universal Banks",
+            "contact": "Ms. Consuelo D. Garcia" , 
+            "position": "Country Manager" , 
+            "contactemail": "zondy.garcia@asia.ing.com",
+            "headquarters": "20th Floor Tower One, Ayala Triangle, Ayala Avenue, Makati City 1226",
+            "country": "Philippines",
+            "offices": "1",
+            "trunkline": "479-8888, 479-8881, 840-8888, 840-8881",
+            "fax": "815-1116, 891-9767, 891-9835",
+            "companyemail": "",   
+            "website": "http://www.ing.com"
+            },
+            {
+            "index": 4,
+            "bankname": "Mizuho Bank, Ltd. - Manila Branch", 
+            "type": "Universal Banks",
+            "contact": "Mr. Tsutomu Yamamoto",
+            "position": "General Manager and Country Head", 
+            "contactemail": "tsutomu.yamamoto@mizuho-cb.com",
+            "headquarters": "25th Floor, The Zuellig Building, Makati Avenue corner Paseo de Roxas, 1225 Makati City",
+            "country": "Philippines",
+            "offices": "1",
+            "trunkline": "860-3500, 860-3558,860-3556, 848-0001 to 10",
+            "fax": "815-3770, 817-8455",
+            "companyemail": "",   
+            "website": "http://www.mizuho-fg.co.jp"
+            },
+            {
+            "index": 5,
+            "bankname": "Standard Chartered Bank", 
+            "type": "Universal Banks",
+            "contact": "Ms. Lynette V. Ortiz", 
+            "position": "Chief Excecutive Officer", 
+            "contactemail": "Lynette.Ortiz@sc.com",
+            "headquarters": "The Sky Plaza Bldg., 6788 Ayala Ave., Makati City 1226",
+            "country": "Philippines",
+            "offices": "1",
+            "trunkline": "886-7888",
+            "fax": "886-7146, 752-4554",
+            "companyemail": "",   
+            "website": "http://www.standardchartered.com.ph"
+            }
+        ]
+        };
+
     $(document).ready(function () {
+        var listItems = '<option selected="selected" value="0">Select Bank</option>';
+    
+        for (var i = 0; i < allbanks.banks.length; i++) {
+            listItems += "<option data-tokens='" + allbanks.banks[i].bankname + "' value='" + allbanks.banks[i].bankname + "'>" + allbanks.banks[i].bankname + "</option>";
+        }    
+        $("#supplier_bank_name").html(listItems);
+    
+
         $('#tb_rm_stocks').DataTable({
             responsive: true
         });
-
     });
 
-    /* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
+    //Add Info
     function openNav() {
+        //Displaying SideNav
         document.getElementById("mysidenav_for_rm_stocks").style.width = "30%";
         document.getElementById("mysidenav_for_rm_stocks").style.padding = "60px 10px 0px 10px";
         document.getElementById("main_for_rm_stocks").style.marginLeft = "30%";
-        document.getElementById('btn_add_suppliers').style.display = 'block';
 
+        //Main Division
         document.getElementById('add_new_supplier').style.display = 'block';
         document.getElementById('view_contacts').style.display = 'none';
         document.getElementById('view_bankaccount').style.display = 'none';
+
+        //Access To Add New Data
         document.getElementById('plus_add_contact').style.display = 'block';
-        document.getElementById('plus_add_bankaccount').style.display = 'block';
+        document.getElementById('plus_add_bankaccount').style.display = 'block'; 
 
-        $(".supplier_contact_list").addClass("addinfo_contact_list");
-        $(".supplier_bankaccount_list").addClass("addinfo_bankaccount_list");
+       //Switching Input TO Select
+        document.getElementById('supplier_bank_name').style.display = 'none';
+        document.getElementById('supplier_bank_number_input').style.display = 'none';     
+        
+        //Btn Groups
+        document.getElementById('btn_add_suppliers').style.display = 'block';
+        document.getElementById('btn_edit_suppliers').style.display = 'none';
 
+        //Btn For Add Groups
+        document.getElementById('plus_add_contact').style.display = 'block';
+        document.getElementById('plus_add_bankaccount').style.display = 'block';         
+        document.getElementById('btnback').style.display = 'none';
+
+        //Removing TextArea To readOnly Attributes  
         document.getElementById('fg_stocks_remarks_').readOnly = false;
+        document.getElementById('supplier_account_note').readOnly = false;
+ 
+        //Setting TextArea to Remove ReadOnly Attributes
+        $(':text').prop('readonly', false);
 
+        //Generating An unique Auto Code For Supplier
         function randomstring(length, chars) {
             var result = '';
             for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
@@ -318,45 +447,119 @@
         var random_unique_code = randomstring(7, '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ');
         var abbv = "SUP-";
         var autogencode = abbv.concat(random_unique_code);
+
+        //Where the code will put.
         $('#supplier_code').val(autogencode);
 
+        //Setting side navigation title
         var sidetitle = "Add Supplier";
         $('#sidenavtitle').html(sidetitle);
     }
-
-    /* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
-    function closeNav() {
-        document.getElementById("mysidenav_for_rm_stocks").style.width = "0";
-        document.getElementById("mysidenav_for_rm_stocks").style.padding = "0px 0px 0px 0px";
-        document.getElementById("main_for_rm_stocks").style.marginLeft = "0";
-        document.getElementById('fg_stocks_remarks_').readOnly = false;
-    }
-
-    function readinfo() {
+    
+    //Edit Info
+    function editinfo(){
+        //Displaying SideNav
         document.getElementById("mysidenav_for_rm_stocks").style.width = "30%";
         document.getElementById("mysidenav_for_rm_stocks").style.padding = "60px 10px 0px 10px";
         document.getElementById("main_for_rm_stocks").style.marginLeft = "30%";
+
+        //Main Division
+        document.getElementById('add_new_supplier').style.display = 'block';
+        document.getElementById('view_contacts').style.display = 'none';
+        document.getElementById('view_bankaccount').style.display = 'none'; 
+
+        //Access To Add New Data
+        document.getElementById('plus_add_contact').style.display = 'none';
+        document.getElementById('plus_add_bankaccount').style.display = 'none';
+
+        //Btn Groups
         document.getElementById('btn_add_suppliers').style.display = 'none';
+        document.getElementById('btn_edit_suppliers').style.display = 'block';
+
+        //Btn Edit Group
+        document.getElementById('btnsavechanges').style.display = 'initial';             
+        document.getElementById('btncanceledit').style.display = 'initial';
+        document.getElementById('btnback1').style.display = 'initial';  
+            
+        //Switching Input To Select
+        document.getElementById('supplier_bank_name').style.display = 'block';
+        document.getElementById('supplier_bank_name_input').style.display = 'none';
+
+        //Removing TextArea To readOnly Attributes
+        document.getElementById('fg_stocks_remarks_').readOnly = false;
+        document.getElementById('supplier_account_note').readOnly = false;
+ 
+        //Setting TextArea to Remove ReadOnly Attributes
+        $(':text').prop('readonly', false);
+
+        //Getting input value from database
+        $('#fg_stock_code').val("");
+
+        //Setting side navigation title
+        var sidetitle = "Edit Supplier Information";
+        $('#sidenavtitle').html(sidetitle);
+    }   
+
+    //View Just Info
+    function readinfo() {
+        //Displaying SideNav
+        document.getElementById("mysidenav_for_rm_stocks").style.width = "30%";
+        document.getElementById("mysidenav_for_rm_stocks").style.padding = "60px 10px 0px 10px";
+        document.getElementById("main_for_rm_stocks").style.marginLeft = "30%";
+
+        //Main Division
         document.getElementById('add_new_supplier').style.display = 'block';
         document.getElementById('view_contacts').style.display = 'none';
         document.getElementById('view_bankaccount').style.display = 'none';
+
+        //Access To Add New Data
         document.getElementById('plus_add_contact').style.display = 'none';
-        document.getElementById('plus_add_bankaccount').style.display = 'none';
+        document.getElementById('plus_add_bankaccount').style.display = 'none';   
+
+        //Btn Groups       
+        document.getElementById('btn_add_suppliers').style.display = 'none';
+        document.getElementById('btn_edit_suppliers').style.display = 'block';  
+
+        //Btn For Edit Groups
+        document.getElementById('btnsavechanges').style.display = 'none';             
+        document.getElementById('btncanceledit').style.display = 'none';
+        document.getElementById('btnback1').style.display = 'none';       
+
+        //Switching Select To Input
+        var earrings = document.getElementById('supplier_bank_name');
+        earrings.style.visibility = 'hidden';
+        document.getElementById('supplier_bank_name_input').style.display = 'block';
+
+        //Setting TextArea TO ReadOnly
         document.getElementById('fg_stocks_remarks_').readOnly = true;
-        
-        $(".supplier_contact_list").addClass("readinfo_contact_list");
-        $(".supplier_bankaccount_list").addClass("readinfo_bankaccount_list");
-        $('#fg_stock_code').val("");   //Value from the database    
+        document.getElementById('supplier_account_note').readOnly = true;
+
+        //Setting All Input with a type is equal to text will be ReadOnly
+        $(':text').prop('readonly', true);
+
+        //Setting input value is equal to empty
+        $('#fg_stock_code').val("");   //Get value from the database 
+
+        //Setting side navigation title
         var sidetitle = "Supplier Information";
         $('#sidenavtitle').html(sidetitle);
     }
 
+    //Close SideNav
+    function closeNav() {
+        document.getElementById("mysidenav_for_rm_stocks").style.width = "0";
+        document.getElementById("mysidenav_for_rm_stocks").style.padding = "0px 0px 0px 0px";
+        document.getElementById("main_for_rm_stocks").style.marginLeft = "0";
+    }
+
+    //Map Side Nav Map
     function openmap() {
         document.getElementById("my_googlemap").style.width = "50%";
         document.getElementById("my_googlemap").style.padding = "60px 10px 0px 10px";
         document.getElementById("my_googlemap").style.marginLeft = "50%";
     }
 
+    //Close Map Side Nav Map
     function closemap() {
         document.getElementById("my_googlemap").style.width = "0";
         document.getElementById("my_googlemap").style.padding = "0px 0px 0px 0px";
@@ -369,58 +572,51 @@
         document.getElementById('view_contacts').style.display = 'block';
         document.getElementById('view_bankaccount').style.display = 'none';
     }
+
+    //Show Hidden Bank Info
     function show_view_bank_account() {
         document.getElementById('add_new_supplier').style.display = 'none';
         document.getElementById('view_contacts').style.display = 'none';
-        document.getElementById('view_bankaccount').style.display = 'block';
+        document.getElementById('view_bankaccount').style.display = 'block';        
     }
 
-    //Adding Classes Into List
-    $('.addinfo_contact_list').on('click', function () {
-        document.getElementById('add_new_supplier').style.display = 'none';
-        document.getElementById('view_contacts').style.display = 'block';
-        document.getElementById('view_bankaccount').style.display = 'none';
-    });
-
-    $('.addinfo_bankaccount_list').on('click', function () {
-        document.getElementById('add_new_supplier').style.display = 'none';
+    //Back to main | For Adding And Editing
+    function backtomain() {
+        //Main Division
+        document.getElementById('add_new_supplier').style.display = 'block';
         document.getElementById('view_contacts').style.display = 'none';
-        document.getElementById('view_bankaccount').style.display = 'block';
-    });
-
-    $('.readinfo_contact_list').on('click', function () {
-        document.getElementById('add_new_supplier').style.display = 'none';
-        document.getElementById('view_contacts').style.display = 'block';
         document.getElementById('view_bankaccount').style.display = 'none';
-    });
 
-    $('.readinfo_bankaccount_list').on('click', function () {
-        document.getElementById('add_new_supplier').style.display = 'none';
+        //Btn Groups
+        document.getElementById('btn_add_suppliers').style.display = 'block';
+        document.getElementById('btn_edit_suppliers').style.display = 'none';
+
+        //Btn For Add Groups
+        document.getElementById('plus_add_contact').style.display = 'block';
+        document.getElementById('plus_add_bankaccount').style.display = 'block';         
+        document.getElementById('btnback').style.display = 'none';
+    }
+
+    //Back to main | For viewing only
+    function backtomain1() {
+        //Main Division
+        document.getElementById('add_new_supplier').style.display = 'block';
         document.getElementById('view_contacts').style.display = 'none';
-        document.getElementById('view_bankaccount').style.display = 'block';
-    });
+        document.getElementById('view_bankaccount').style.display = 'none';
 
-    //Setting Active list
-    $(".itemstorecieved").hover(
-        function () {
-            $(this).addClass("active");
-        },
-        function () {
-            $(this).removeClass("active");
-        }
-    );
+        //Access To Add New Data
+        document.getElementById('plus_add_contact').style.display = 'none';
+        document.getElementById('plus_add_bankaccount').style.display = 'none'; 
 
-    $('.itemstorecieved').on('click', function () {
-        document.getElementById('listofrecievables').style.display = 'none';
-        document.getElementById('listofrecievables_info').style.display = 'block';
+        //Btn Groups
+        document.getElementById('btn_add_suppliers').style.display = 'none';
+        document.getElementById('btn_edit_suppliers').style.display = 'block';  
 
-    });
-
-    $('.reset').on('click', function () {
-        document.getElementById("mysidenav_for_rm_stocks").style.width = "0";
-        document.getElementById("mysidenav_for_rm_stocks").style.padding = "0px 0px 0px 0px";
-        document.getElementById("main_for_rm_stocks").style.marginLeft = "0";
-    });
+        //Btn For Edit Groups
+        document.getElementById('btnsavechanges').style.display = 'initial';             
+        document.getElementById('btncanceledit').style.display = 'initial';
+        document.getElementById('btnback1').style.display = 'none';       
+    }
 
     //Use Google Map For Address
     var map;
@@ -476,6 +672,48 @@
         }
     }
     google.maps.event.addDomListener(window, 'load', initialize);
+
+    //Show Hidden Supplier Info
+    $('.supplier_contact_list').on('click', function () {
+        document.getElementById('add_new_supplier').style.display = 'none';
+        document.getElementById('view_contacts').style.display = 'block';
+        document.getElementById('view_bankaccount').style.display = 'none';
+        document.getElementById('btnback').style.display = 'initial';
+    });
+
+    $('.supplier_bankaccount_list').on('click', function () {
+        document.getElementById('add_new_supplier').style.display = 'none';
+        document.getElementById('view_contacts').style.display = 'none';
+        document.getElementById('view_bankaccount').style.display = 'block';
+        document.getElementById('btnback').style.display = 'initial';
+    });
+
+    //Setting Active list making them a shade of blue
+    $(".supplier_contact_list").hover(
+        function () {
+            $(this).addClass("active");
+        },
+        function () {
+            $(this).removeClass("active");
+        }
+    );
+
+    $(".supplier_bankaccount_list").hover(
+        function () {
+            $(this).addClass("active");
+        },
+        function () {
+            $(this).removeClass("active");
+        }
+    );
+
+    //Reset adn Close all valuable value inputed if press cancel btn
+    $('.reset').on('click', function () {
+        document.getElementById("mysidenav_for_rm_stocks").style.width = "0";
+        document.getElementById("mysidenav_for_rm_stocks").style.padding = "0px 0px 0px 0px";
+        document.getElementById("main_for_rm_stocks").style.marginLeft = "0";
+    }); 
+
 </script>
 <style type="text/css">
     /* The side navigation menu */
