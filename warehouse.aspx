@@ -37,8 +37,6 @@
 </head>
 
 <body>
-
-
     <form id="form1" runat="server">
         <nav class="navbar navbar-default" id="navigation"></nav>
         <div class="container-fluid" id="main">
@@ -49,7 +47,7 @@
             </ol>
             <h1>Item Management</h1>
             <hr>
-
+            
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">List</a></li>
@@ -133,8 +131,7 @@
 <script type="text/javascript">
     $("#navigation").load("navigation.html");
     $("#footer").load("../footer.html");
-
-
+    
     $(document).ready(function () {
         // DataTable
         var table = $('#tb_jobsched').DataTable();
