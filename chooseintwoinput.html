@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head runat="server">
+    <title></title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+    <!--Bootstrap 3.3.7-->
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <form action="POST">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="screenName">Screen name</label>
+                        <input type="text" placeholder="Screen Name" class="form-control " autocomplete="off" name="screenName" id="screenName" />
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="userID">User ID</label>
+                        <input type="text" placeholder="User ID" class="form-control user" autocomplete="off" name="userID" id="userID" />
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary" id="mainbtn" onclick="verify();">SUBMIT</button>
+                    <button type="reset" class="btn btn-primary backbtn" id="backbtn" style="display:none;">BACK</button>
+                    <button type="button" class="btn btn-primary choosescreenName" id="choosescreenName" style="display:none;">CHOOSE SCREEN NAME</button>
+                    <button type="button" class="btn btn-primary chooseuserID" id="chooseuserID" style="display:none;">CHOOSE USER ID</button>
+                </div>
+
+                <div class="col-md-12">
+                    <hr>
+                    <div class="form-group">
+                        <label for="userID">Value</label>
+                        <input type="text" placeholder="Taken Value" class="form-control" id="takedvalue" readonly />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
+<script type="text/javascript">
+    function verify() {
+        var screenName = document.getElementById("screenName").value;
+        var userID = document.getElementById("userID").value;
+
+        if (userID === '' && screenName === '') {
+            alert('Add value to any field');
+        }
+        if (userID !== '' && screenName === '') {
+            alert('Your screen name are currently empty. The value you will be taken is your screen name');
+            document.getElementById("takedvalue").value = userID;
+        }
+        if (userID === '' && screenName !== '') {
+            alert('Your user id are currently empty. The value you will be taken is your user identification');
+            document.getElementById("takedvalue").value = screenName;
+        }
+
+        if (userID !== '' && screenName !== '') {
+            document.getElementById("mainbtn").style.display = "none";
+            document.getElementById("backbtn").style.display = "initial";
+            document.getElementById("choosescreenName").style.display = "initial";
+            document.getElementById("chooseuserID").style.display = "initial";
+        }
+    }
+
+    //Reset Form
+    $('.backbtn').click(function () {
+        document.getElementById("mainbtn").style.display = "initial";
+        document.getElementById("backbtn").style.display = "none";
+        document.getElementById("choosescreenName").style.display = "none";
+        document.getElementById("chooseuserID").style.display = "none";
+    });
+
+    //Choose First Input
+    $('.choosescreenName').click(function () {
+        var screenName = document.getElementById("screenName").value;
+        document.getElementById("takedvalue").value = screenName;
+    });
+
+    //Choose Second Input
+    $('.chooseuserID').click(function () {
+        var userID = document.getElementById("userID").value;
+        document.getElementById("takedvalue").value = userID;
+    });
+
+</script>
