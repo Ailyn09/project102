@@ -8,7 +8,7 @@ TABLE
 |    ID     | Job Code |  Job Name  |   Step    |  Status  |
 +-----------+----------+------------+-----------+----------+
 | 1         | J0003    | Designing  | 0         | 1        |
-| 2         | J0003    | Printing   | 1         | 1        |
+| 2         | J0003    | Printing   | 1         | 0        |
 | 3         | J0003    | Tracing    | 2         | 0        |
 | 4         | J0004    | Designing  | 0         | 0        |
 | 5         | J0004    | Mock Up    | 1         | 0        |
