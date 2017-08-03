@@ -1,0 +1,38 @@
+STACKOVERFLOW QUESTION:
+https://stackoverflow.com/questions/45458247/check-previous-step-if-status-is-done-and-display-if-the-next-process-if-its-fi
+
+SELECT SPECIFIC JOB AND CHECK IF PREVIOUS PROCESS STATUS IS FINISHED
+
+TABLE
++-----------+----------+------------+-----------+----------+
+|    ID     | Job Code |  Job Name  |   Step    |  Status  |
++-----------+----------+------------+-----------+----------+
+| 1         | J0003    | Designing  | 0         | 1        |
+| 2         | J0003    | Printing   | 1         | 1        |
+| 3         | J0003    | Tracing    | 2         | 0        |
+| 4         | J0004    | Designing  | 0         | 0        |
+| 4         | J0004    | Mock Up    | 1         | 0        |
+| 5         | J0004    | Printing   | 2         | 0        |
++-----------+----------+------------+-----------+----------+
+
+SQL QUERY
+
+SELECT p.*
+FROM process p
+WHERE p.status = 0 
+AND AND p.jobname='Printing' 
+AND EXISTS (SELECT 1 FROM process p2 WHERE p2.step = p.step - 1 AND p2.status = 1);
+
+RESULT
+
++-----------+----------+------------+-----------+----------+
+| 2         | J0003    | Printing   | 1         | 0        |
++-----------+----------+------------+-----------+----------+
+
+
+EXPECTED RESULT
+
++-----------+----------+------------+-----------+----------+
+| 2         | J0003    | Printing   | 1         | 0        |
+| 5         | J0004    | Printing   | 2         | 0        |
++-----------+----------+------------+-----------+----------+
